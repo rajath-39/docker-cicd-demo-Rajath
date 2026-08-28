@@ -3,8 +3,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "docker-cicd-demo-rajath"
-        CONTAINER_NAME = "docker-container"
+        IMAGE_NAME = "mywebsite"
+        CONTAINER_NAME = "mywebsite-container"
     }
 
     stages {
@@ -18,24 +18,16 @@ pipeline {
             }
         }
 
-       stage('Test') {
-    steps {
-        echo 'Testing application...'
-        sh '''
-            echo "Current directory:"
-            pwd
+        stage('Test') {
+            steps {
+                echo 'Testing application...'
 
-            echo "Files in workspace:"
-            ls -la
-
-            echo "Checking index.html:"
-            test -f index.html
-
-            echo "Checking Dockerfile:"
-            test -f Dockerfile
-        '''
-    }
-}
+                sh '''
+                    test -f index.html
+                    test -f Dockerfile
+                '''
+            }
+        }
 
         stage('Docker Build') {
             steps {
