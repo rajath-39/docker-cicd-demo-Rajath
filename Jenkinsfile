@@ -18,16 +18,24 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                echo 'Testing application...'
+       stage('Test') {
+    steps {
+        echo 'Testing application...'
+        sh '''
+            echo "Current directory:"
+            pwd
 
-                sh '''
-                    test -f index.html
-                    test -f Dockerfile
-                '''
-            }
-        }
+            echo "Files in workspace:"
+            ls -la
+
+            echo "Checking index.html:"
+            test -f index.html
+
+            echo "Checking Dockerfile:"
+            test -f Dockerfile
+        '''
+    }
+}
 
         stage('Docker Build') {
             steps {
